@@ -354,7 +354,7 @@ function render(){
   const p=byId.get(card.dataset.id);card.hidden=!shown.has(p.id);if(card.hidden)return;
   const g=context(p),v=p.admissions[g]?.[r]?.[region],title=card.querySelector('.range-title'),num=card.querySelector('.range-number'),status=card.querySelector('.range-status');card.querySelector('.card-intro').innerHTML=introHTML(p);
   title.textContent=routes[r]+' • منطقهٔ '+fa(region);
-  if(v){num.textContent=interval(v);status.textContent=v.kind==='observed'?'بازهٔ پرتکرارِ نمونه‌های ۱۴۰۴؛ '+fa(v.count)+' مورد بررسی‌شده':v.kind==='limited'?'نمونه‌های محدود ۱۴۰۴؛ '+fa(v.count)+' مورد':v.kind==='typical'?'بازهٔ محافظه‌کارانه؛ رتبه‌های استثنایی حذف شده':v.family?'بازهٔ تقریبیِ خانوادهٔ این رشته':'بازهٔ تقریبی؛ وابسته به دانشگاه';}
+  if(v){num.textContent=interval(v);status.textContent=v.kind==='observed'?'بازهٔ پرتکرارِ نمونه‌های ۱۴۰۴؛ '+fa(v.count)+' مورد بررسی‌شده':v.kind==='limited'?'نمونه‌های محدود ۱۴۰۴؛ '+fa(v.count)+' مورد':v.kind==='typical'?'':v.family?'بازهٔ تقریبیِ خانوادهٔ این رشته':'بازهٔ تقریبی؛ وابسته به دانشگاه';}
   else{const msg=absence(p,g,r);num.textContent='';status.textContent=msg.join(' • ');}
   const n=p.examples[g]?.length||0;card.querySelector('.example-count').textContent=n?fa(n)+' نمونهٔ ۱۴۰۴':'معرفی و مسیر پذیرش';
  });
@@ -381,7 +381,7 @@ function rangeHTML(p,g,r){
  const row=p.admissions[g]?.[r];if(!row||!Object.keys(row).length)return noRangeHTML(p,g,r);
  const heads=[1,2,3].map(i=>'<th scope="col" class="'+(String(i)===$('region').value?'selected':'')+'">منطقهٔ '+fa(i)+'</th>').join('');
  const cells=[1,2,3].map(i=>{const v=row[i],cl=String(i)===$('region').value?'selected':'';
- return '<td class="'+cl+'">'+(v?'<span class="rank-value">'+interval(v)+'</span><span class="rank-cell-note">'+(v.kind==='observed'?'بازهٔ پرتکرارِ نمونه‌های ۱۴۰۴<br>'+fa(v.count)+' نمونهٔ بررسی‌شده':v.kind==='limited'?'نمونه‌های محدود ۱۴۰۴<br>'+fa(v.count)+' مورد':v.kind==='typical'?'محافظه‌کارانه<br>استثناها حذف شده':v.family?'تقریبی • خانوادهٔ رشته':'بازهٔ تقریبی')+'</span>':'<span class="rank-cell-note">بازهٔ قابل اتکا<br>فراهم نیست</span>')+'</td>';}).join('');
+ return '<td class="'+cl+'">'+(v?'<span class="rank-value">'+interval(v)+'</span><span class="rank-cell-note">'+(v.kind==='observed'?'بازهٔ پرتکرارِ نمونه‌های ۱۴۰۴<br>'+fa(v.count)+' نمونهٔ بررسی‌شده':v.kind==='limited'?'نمونه‌های محدود ۱۴۰۴<br>'+fa(v.count)+' مورد':v.kind==='typical'?'':v.family?'تقریبی • خانوادهٔ رشته':'بازهٔ تقریبی')+'</span>':'<span class="rank-cell-note">بازهٔ قابل اتکا<br>فراهم نیست</span>')+'</td>';}).join('');
  return '<div class="table-wrap"><table class="rank-table"><thead><tr>'+heads+'</tr></thead><tbody><tr>'+cells+'</tr></tbody></table></div><span class="mobile-hint">اگر جدول کامل دیده نشد، آن را افقی جابه‌جا کن.</span><p class="table-description">رتبه در سهمیهٔ منطقه. بازه‌ها عمداً محافظه‌کارانه‌تر شده‌اند تا رتبه‌های تک‌موردی و استثنایی سقف قبولی را بالا نبرند؛ با این حال دانشگاه، ظرفیت، بومی‌گزینی و نوع دوره همچنان نتیجه را تغییر می‌دهند و هیچ بازه‌ای تضمین قطعی قبولی نیست.</p>';
 }
 function examplesHTML(p,g){
